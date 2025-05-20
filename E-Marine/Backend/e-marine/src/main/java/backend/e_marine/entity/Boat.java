@@ -1,12 +1,12 @@
 package backend.e_marine.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -20,6 +20,6 @@ public class Boat {
     private String type;
     private String status;
 
-    @OneToOne
-    private BoatLocation currentLocation;
+    @OneToMany(mappedBy = "boat", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<BoatLocation> locations = new ArrayList<>();
 }

@@ -1,6 +1,5 @@
-package backend.e_marine.entity;
+package backend.e_marine.dto;
 
-import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -10,16 +9,11 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @RequiredArgsConstructor
-@Entity
-public class BoatLocation {
-    @Id
-    @GeneratedValue
-    private Long id;
+public class BoatWithLocationDto {
+    private String name;
+    private String type;
+    private String status;
     private Double latitude;
     private Double longitude;
     private LocalDateTime timestamp;
-
-    @ManyToOne
-    @JoinColumn(name = "boat_id")
-    private Boat boat;
 }
