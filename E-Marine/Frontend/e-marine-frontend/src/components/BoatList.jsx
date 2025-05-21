@@ -1,33 +1,19 @@
-import { useEffect, useState } from 'react';
-import { getBoats, deleteBoat, updateBoat } from '../services/BoatService';
+import React from 'react';
 
-export default function BoatList() {
-  const [boats, setBoats] = useState([]);
-
-  const fetchData = async () => {
-    const res = await getBoats();
-    setBoats(res.data);
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
+export default function BoatList({ boats, onEdit, onDelete }) {
+  console.log('Boats passed to BoatList:', boats); // Debug line
 
   return (
     <div>
-      <h2 className="text-lg font-bold mb-2">Boat List</h2>
+      <h2>Boat List</h2>
       <ul>
         {boats.map((boat) => (
-          <li
-            key={boat.id}
-            className="flex justify-between items-center border-b py-1"
-          >
+          <li key={boat.id} style={{ marginBottom: '0.5rem' }}>
             <span>
-              {boat.name} ({boat.type}) - {boat.status}
+              <b>{boat.name}</b> ({boat.type}) - {boat.status} | Lat: {boat.latitude}, Lng: {boat.longitude} | {boat.timestamp}
             </span>
-            <button onClick={() => {deleteBoat(boat.id).then(fetchData);}}className="text-red-500">Delete</button>
-            <button onClick={() => {updateBoat(boat.id, boat).then(fetchData);}}className="text-red-500">Update</button>
-            
+            <button onClick={() => onEdit(boat)} style={{ marginLeft: '1rem' }}>Edit</button>
+            <button onClick={() => onDelete(boat.id)} style={{ marginLeft: '0.5rem' }}>Delete</button>
           </li>
         ))}
       </ul>

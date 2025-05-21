@@ -14,6 +14,16 @@ export default function BoatForm({ onSubmit, initialData, onCancel }) {
   useEffect(() => {
     if (initialData) {
       setFormData(initialData);
+    } else {
+      setFormData({
+        id: null,
+        name: '',
+        type: '',
+        status: '',
+        latitude: '',
+        longitude: '',
+        timestamp: ''
+      });
     }
   }, [initialData]);
 
@@ -24,12 +34,22 @@ export default function BoatForm({ onSubmit, initialData, onCancel }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit(formData);
-    setFormData({ id: null, name: '', type: '', status: '', latitude: '', longitude: '', timestamp: '' });
+    // Generate a unique numeric ID if not present
+    const id = formData.id || Date.now();
+    onSubmit({ ...formData, id });
+    setFormData({
+      id: id,
+      name: '',
+      type: '',
+      status: '',
+      latitude: '',
+      longitude: '',
+      timestamp: ''
+    });
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} style={{ marginBottom: '1rem' }}>
       <input name="name" placeholder="Name" value={formData.name} onChange={handleChange} required />
       <input name="type" placeholder="Type" value={formData.type} onChange={handleChange} required />
       <input name="status" placeholder="Status" value={formData.status} onChange={handleChange} required />

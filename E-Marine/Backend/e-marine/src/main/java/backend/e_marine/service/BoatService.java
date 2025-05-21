@@ -23,6 +23,7 @@ public class BoatService {
     // Create a boat with initial location
     public BoatWithLocationDto createBoat(BoatWithLocationDto dto) {
         Boat boat = new Boat();
+        boat.setId(dto.getId());
         boat.setName(dto.getName());
         boat.setType(dto.getType());
         boat.setStatus(dto.getStatus());
@@ -47,6 +48,7 @@ public class BoatService {
                     .max((l1, l2) -> l1.getTimestamp().compareTo(l2.getTimestamp()));
 
             BoatWithLocationDto dto = new BoatWithLocationDto();
+            dto.setId(boat.getId());
             dto.setName(boat.getName());
             dto.setType(boat.getType());
             dto.setStatus(boat.getStatus());
@@ -62,8 +64,8 @@ public class BoatService {
     }
 
     // Update boat status and location
-    public BoatWithLocationDto updateBoat(Long boatId, BoatWithLocationDto dto) {
-        Boat boat = boatRepository.findById(boatId).orElseThrow();
+    public BoatWithLocationDto updateBoat(BoatWithLocationDto dto) {
+        Boat boat = boatRepository.findById(dto.getId()).orElseThrow();
 
         boat.setStatus(dto.getStatus());
         boatRepository.save(boat);

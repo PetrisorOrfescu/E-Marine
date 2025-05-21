@@ -35,7 +35,7 @@ public class BoatController {
             @PathVariable Long boatId,
             @RequestBody BoatWithLocationDto dto
     ) {
-        BoatWithLocationDto updated = boatService.updateBoat(boatId, dto);
+        BoatWithLocationDto updated = boatService.updateBoat(dto);
         return ResponseEntity.ok(updated);
     }
 

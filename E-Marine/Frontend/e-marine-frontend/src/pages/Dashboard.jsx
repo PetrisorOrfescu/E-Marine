@@ -16,7 +16,13 @@ export default function Dashboard() {
   const fetchBoats = async () => {
     try {
       const response = await getBoats();
-      setBoats(response.data);
+      const boatsData = response.data || response;
+      // Map _id to id if necessary
+      const mappedBoats = boatsData.map(boat => ({
+        ...boat,
+        id: boat.id || boat._id // Use id if present, otherwise use _id
+      }));
+      setBoats(mappedBoats);
     } catch (err) {
       console.error('Failed to fetch boats:', err);
     }
@@ -49,6 +55,7 @@ export default function Dashboard() {
     try {
       await deleteBoat(id);
       fetchBoats();
+      if (selectedBoat && selectedBoat.id === id) setSelectedBoat(null);
     } catch (err) {
       console.error('Error deleting boat:', err);
     }
@@ -68,6 +75,7 @@ export default function Dashboard() {
         onDelete={handleDelete}
       />
       <BoatMap boats={boats} />
+      
     </div>
   );
 }

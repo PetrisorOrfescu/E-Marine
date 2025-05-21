@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 @Setter
 @RequiredArgsConstructor
 public class BoatWithLocationDto {
+    private Long id;
     private String name;
     private String type;
     private String status;

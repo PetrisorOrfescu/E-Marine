@@ -14,7 +14,6 @@ import java.util.List;
 @Entity
 public class Boat {
     @Id
-    @GeneratedValue
     private Long id;
     private String name;
     private String type;
